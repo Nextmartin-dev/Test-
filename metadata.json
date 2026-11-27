@@ -1,0 +1,6 @@
+{
+  "name": "Sustechs - Renewable Technology Solutions",
+  "description": "South Coast renewable energy engineering specialists in commercial and domestic solar PV, battery storage, heat pumps, and EV charging across Dorset and Hampshire.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
