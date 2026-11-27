@@ -65,14 +65,16 @@ export const Header: React.FC<HeaderProps> = ({
     currentPage === 'solutions' || currentPage.startsWith('solution-');
 
   const useSolidBackdrop =
-    isScrolled || (currentPage !== 'home' && currentPage !== 'about');
+    isScrolled ||
+    mobileMenuOpen ||
+    (currentPage !== 'home' && currentPage !== 'about');
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
         useSolidBackdrop
           ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm py-3'
-          : 'bg-white/90 backdrop-blur-md border-b border-slate-200/70 py-4'
+          : 'bg-transparent py-4'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 sm:px-6 lg:px-8">
@@ -87,13 +89,17 @@ export const Header: React.FC<HeaderProps> = ({
             src="/assets/aistudio/Sustechs-Logo-simple_b42f02a1.webp"
             alt="Sustechs"
             referrerPolicy="no-referrer"
-            className="h-8 sm:h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+            className={`h-8 sm:h-9 w-auto object-contain transition-all duration-200 group-hover:scale-[1.02] ${
+              useSolidBackdrop ? '' : 'drop-shadow-[0_1px_6px_rgba(15,23,42,0.5)]'
+            }`}
           />
         </a>
 
         {/* Zone 2: Frameless Navigation Links with Solutions Dropdown */}
         <nav
-          className="hidden md:flex items-center gap-5 lg:gap-7 text-sm font-medium text-slate-700"
+          className={`hidden md:flex items-center gap-5 lg:gap-7 text-sm font-medium transition-colors ${
+            useSolidBackdrop ? 'text-slate-700' : 'text-white/95'
+          }`}
           aria-label="Main navigation"
         >
           {/* About Us First Tab */}
@@ -103,8 +109,12 @@ export const Header: React.FC<HeaderProps> = ({
             aria-current={currentPage === 'about' ? 'page' : undefined}
             className={`relative whitespace-nowrap shrink-0 transition-colors py-1 ${
               currentPage === 'about'
-                ? 'text-lime-700 font-semibold'
-                : 'text-slate-700 hover:text-lime-700'
+                ? useSolidBackdrop
+                  ? 'text-lime-700 font-semibold'
+                  : 'text-lime-300 font-semibold drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
+                : useSolidBackdrop
+                  ? 'text-slate-700 hover:text-lime-700'
+                  : 'text-white hover:text-lime-300 drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
             }`}
           >
             <span>About Us</span>
@@ -130,8 +140,12 @@ export const Header: React.FC<HeaderProps> = ({
                 aria-current={isSolutionsActive ? 'page' : undefined}
                 className={`relative whitespace-nowrap shrink-0 transition-colors py-1 ${
                   isSolutionsActive
-                    ? 'text-lime-700 font-semibold'
-                    : 'text-slate-700 hover:text-lime-700'
+                    ? useSolidBackdrop
+                      ? 'text-lime-700 font-semibold'
+                      : 'text-lime-300 font-semibold drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
+                    : useSolidBackdrop
+                      ? 'text-slate-700 hover:text-lime-700'
+                      : 'text-white hover:text-lime-300 drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
                 }`}
               >
                 <span>Solutions</span>
@@ -150,8 +164,12 @@ export const Header: React.FC<HeaderProps> = ({
                 aria-label="Toggle solutions menu"
                 className={`p-1 rounded transition-colors cursor-pointer ${
                   isSolutionsActive || solutionsDropdownOpen
-                    ? 'text-lime-700'
-                    : 'text-slate-600 hover:text-lime-700'
+                    ? useSolidBackdrop
+                      ? 'text-lime-700'
+                      : 'text-lime-300 drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
+                    : useSolidBackdrop
+                      ? 'text-slate-600 hover:text-lime-700'
+                      : 'text-white hover:text-lime-300 drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
                 }`}
               >
                 <ChevronDown
@@ -224,8 +242,12 @@ export const Header: React.FC<HeaderProps> = ({
                 aria-current={isActive ? 'page' : undefined}
                 className={`relative whitespace-nowrap shrink-0 transition-colors py-1 ${
                   isActive
-                    ? 'text-lime-700 font-semibold'
-                    : 'text-slate-700 hover:text-lime-700'
+                    ? useSolidBackdrop
+                      ? 'text-lime-700 font-semibold'
+                      : 'text-lime-300 font-semibold drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
+                    : useSolidBackdrop
+                      ? 'text-slate-700 hover:text-lime-700'
+                      : 'text-white hover:text-lime-300 drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
                 }`}
               >
                 <span>{item.label}</span>
@@ -244,9 +266,17 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="hidden lg:flex items-center gap-5 shrink-0">
           <a
             href={`tel:${COMPANY_DETAILS.phone}`}
-            className="flex items-center gap-2 text-xs font-semibold text-slate-700 hover:text-lime-700 transition-colors whitespace-nowrap"
+            className={`flex items-center gap-2 text-xs font-semibold transition-colors whitespace-nowrap ${
+              useSolidBackdrop
+                ? 'text-slate-700 hover:text-lime-700'
+                : 'text-white hover:text-lime-300 drop-shadow-[0_1px_4px_rgba(15,23,42,0.85)]'
+            }`}
           >
-            <Phone className="h-3.5 w-3.5 text-lime-700" />
+            <Phone
+              className={`h-3.5 w-3.5 ${
+                useSolidBackdrop ? 'text-lime-700' : 'text-lime-400'
+              }`}
+            />
             <span>{COMPANY_DETAILS.phone}</span>
           </a>
 
@@ -263,7 +293,11 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-700 hover:text-slate-950 hover:bg-slate-100 md:hidden transition-colors"
+          className={`flex h-9 w-9 items-center justify-center rounded-lg md:hidden transition-colors ${
+            useSolidBackdrop
+              ? 'text-slate-700 hover:text-slate-950 hover:bg-slate-100'
+              : 'text-white hover:text-lime-300 hover:bg-white/10'
+          }`}
           aria-label="Toggle navigation menu"
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

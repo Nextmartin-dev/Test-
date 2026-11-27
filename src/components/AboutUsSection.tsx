@@ -112,6 +112,12 @@ export const AboutUsSection: React.FC<AboutUsSectionProps> = ({
           aria-hidden="true"
         />
 
+        {/* Soft, tall top fade so header links remain legible with zero hard band */}
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-56 z-10 bg-gradient-to-b from-slate-950/45 via-slate-950/15 to-transparent"
+          aria-hidden="true"
+        />
+
         {/* Smooth Bottom Fade into White Section Canvas */}
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-44 z-10 bg-gradient-to-t from-white via-white/65 to-transparent"
